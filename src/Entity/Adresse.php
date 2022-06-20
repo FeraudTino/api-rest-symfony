@@ -5,11 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AdresseRepository;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: AdresseRepository::class)]
+#[ApiResource()]
 class Adresse
 {
     #[ORM\Id]
@@ -105,5 +106,5 @@ class Adresse
         }
 
         return $this;
-    }
+    }   
 }

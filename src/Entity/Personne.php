@@ -5,11 +5,13 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PersonneRepository;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 
 #[ORM\Entity(repositoryClass: PersonneRepository::class)]
+#[ApiResource()]
 class Personne
 {
     #[ORM\Id]
@@ -40,6 +42,12 @@ class Personne
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(?int $id): self
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function getNom(): ?string
@@ -87,6 +95,12 @@ class Personne
     {
         $this->Adresse->removeElement($adresse);
 
+        return $this;
+    }
+
+    public function setAdresses(array $adresses)
+    {
+        $this->adresses = $adresses;
         return $this;
     }
 }
