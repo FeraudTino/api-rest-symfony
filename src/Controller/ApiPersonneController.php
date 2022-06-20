@@ -15,16 +15,17 @@ class ApiPersonneController extends AbstractController
     #[Route('/api/personne', name: 'app_api_personne')]
     public function index(PersonneRepository $rep, SerializerInterface $serializer)
     {
-        $personnes = $rep->findAll();
-        $json = $serializer->serialize($personnes, 'json', [
-            'groups' => 'personne:read'
-        ]);
-        $reponse = new Response($json, 200, ['content-type' => 'application/json']);
-        return $reponse;
-
-        // return $this->json([
-        //     'message' => 'Welcome to your new controller!',
-        //     'path' => 'src/Controller/ApiPersonneController.php',
+        // VERSION 1
+        // $personnes = $rep->findAll();
+        // $json = $serializer->serialize($personnes, 'json', [
+        //     'groups' => 'personne:read'
         // ]);
+        // $reponse = new Response($json, 200, ['content-type' => 'application/json']);
+        // return $reponse;
+
+        // VERSION 2 COURTE
+        $personnes = $rep->findAll();
+        return $this->json($personnes, 200, [], ['groups' => 'personne:read']);
+
     }
 }
