@@ -17,6 +17,7 @@
         "symfony/framework-bundle": "*",
         "symfony/proxy-manager-bridge": "6.1.*",
         "symfony/runtime": "*",
+        "symfony/serializer": "^6.1",
         "symfony/yaml": "*"
     },
     "require-dev": {

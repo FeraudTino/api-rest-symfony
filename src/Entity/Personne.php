@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\PersonneRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PersonneRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: PersonneRepository::class)]
 class Personne
@@ -13,20 +15,26 @@ class Personne
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups("personne:read")]
     private $id;
 
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
+    #[Groups("personne:read")]
     private $nom;
 
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
+    #[Groups("personne:read")]
     private $prenom;
 
-    #[ORM\ManyToMany(targetEntity: Adresse::class, cascade: ['persist'])]
-    private $adresses;
+    #[ORM\ManyToMany(targetEntity: Adresse::class, inversedBy: 'personnes',  cascade: ['persist'])]
+    #[Groups("personne:read")]
+    private $Adresse;
+
 
     public function __construct()
     {
         $this->adresses = new ArrayCollection();
+        $this->Adresse = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -61,24 +69,26 @@ class Personne
     /**
      * @return Collection<int, Adresse>
      */
-    public function getAdresses(): Collection
+    public function getAdresse(): Collection
     {
-        return $this->adresses;
+        return $this->Adresse;
     }
 
-    public function addAdress(Adresse $adress): self
+    public function addAdresse(Adresse $adresse): self
     {
-        if (!$this->adresses->contains($adress)) {
-            $this->adresses[] = $adress;
+        if (!$this->Adresse->contains($adresse)) {
+            $this->Adresse[] = $adresse;
         }
 
         return $this;
     }
 
-    public function removeAdress(Adresse $adress): self
+    public function removeAdresse(Adresse $adresse): self
     {
-        $this->adresses->removeElement($adress);
+        $this->Adresse->removeElement($adresse);
 
         return $this;
     }
+
+   
 }
