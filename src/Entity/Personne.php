@@ -15,15 +15,15 @@ class Personne
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups("personne:read")]
+    #[Groups(["personne:read", "adresse:read"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
-    #[Groups("personne:read")]
+    #[Groups(["personne:read", "adresse:read"])]
     private $nom;
 
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
-    #[Groups("personne:read")]
+    #[Groups(["personne:read", "adresse:read"])]
     private $prenom;
 
     #[ORM\ManyToMany(targetEntity: Adresse::class, inversedBy: 'personnes',  cascade: ['persist'])]
@@ -89,6 +89,4 @@ class Personne
 
         return $this;
     }
-
-   
 }

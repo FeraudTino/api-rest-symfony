@@ -6,21 +6,20 @@ use App\Repository\PersonneRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApiPersonneController extends AbstractController
 {
     #[Route('/api/personne', name: 'app_api_personne')]
-    public function index(PersonneRepository $rep, NormalizerInterface $normalizer)
+    public function index(PersonneRepository $rep, SerializerInterface $serializer)
     {
         $personnes = $rep->findAll();
-        $normalized = $normalizer->normalize($personnes, null, [
+        $json = $serializer->serialize($personnes, 'json', [
             'groups' => 'personne:read'
         ]);
-        $json = json_encode($normalized);
-
-        $reponse = new Response($json, 200, ['Content-Type' => 'application/json']);
+        $reponse = new Response($json, 200, ['content-type' => 'application/json']);
         return $reponse;
 
         // return $this->json([

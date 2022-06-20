@@ -15,21 +15,23 @@ class Adresse
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(["personne:read", "adresse:read"])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
-    #[Groups("personne:read")]
+    #[Groups(["personne:read", "adresse:read"])]
     private $rue;
 
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
-    #[Groups("personne:read")]
+    #[Groups(["personne:read", "adresse:read"])]
     private $codePostal;
 
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
-    #[Groups("personne:read")]
+    #[Groups(["personne:read", "adresse:read"])]
     private $ville;
 
     #[ORM\ManyToMany(targetEntity: Personne::class, mappedBy: 'Adresse', cascade: ['persist'])]
+    #[Groups("adresse:read")]
     private $personnes;
 
     public function __construct()
